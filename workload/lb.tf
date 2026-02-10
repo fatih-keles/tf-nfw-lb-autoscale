@@ -4,7 +4,9 @@ resource "oci_load_balancer_load_balancer" "app" {
   shape          = "flexible"
   subnet_ids     = [local.lb_public_subnet_id]
   is_private     = false
-
+  reserved_ips {
+    id = local.lb_public_ip_id
+  }
   network_security_group_ids = [local.nsg_lb_id]
 
   shape_details {

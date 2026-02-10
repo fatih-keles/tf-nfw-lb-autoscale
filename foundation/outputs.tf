@@ -14,6 +14,14 @@ output "nsg_fss_id" { value = oci_core_network_security_group.fss.id }
 output "igw_id" { value = oci_core_internet_gateway.igw.id }
 output "nat_id" { value = oci_core_nat_gateway.nat.id }
 
+output "lb_public_ip_id" {
+  value = oci_core_public_ip.lb_reserved.id
+}
+
+output "lb_public_ip" {
+  value = oci_core_public_ip.lb_reserved.ip_address
+}
+
 # -------------------------
 # FSS Outputs
 # -------------------------
