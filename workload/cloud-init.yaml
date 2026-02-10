@@ -1,0 +1,47 @@
+#cloud-config
+ssh_pwauth: true
+package_update: true
+
+users:
+  - default
+  - name: ${user_name}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: [sudo]
+    shell: /bin/bash
+    lock_passwd: false
+    passwd: "${user_passwd_hash}"
+
+packages:
+  - nginx
+  - nfs-common
+
+runcmd:
+  - [ "bash", "-lc", "curl -fsSL https://raw.githubusercontent.com/fatih-keles/tf-nfw-lb-autoscale/refs/heads/main/stress-cpu.sh -o /usr/local/bin/stress-cpu.sh" ]
+  - [ "bash", "-lc", "chmod 0755 /usr/local/bin/stress-cpu.sh" ]
+  - [ "bash", "-lc", "mkdir -p ${fss_mount_path}" ]
+  - [ "bash", "-lc", "mount ${fss_mount_ip}:${fss_export_path} ${fss_mount_path}" ]
+  - [ "iptables", "-I", "INPUT", "5", "-m", "state", "--state", "NEW", "-p", "tcp", "--destination-port", "80", "-j", "ACCEPT" ]
+  - [ "netfilter-persistent", "save" ]
+  - [ "bash", "-lc", "mkdir -p /var/www/html" ]
+  # - [ "bash", "-lc", "echo 'ok' > /var/www/html/index.html" ]
+  # - [ "bash", "-lc", "echo $(curl -s -H 'Authorization: Bearer Oracle' http://169.254.169.254/opc/v2/instance/displayName) > /var/www/html/index.html" ]
+  # - [ "bash", "-lc", "df -kh >> /var/www/html/index.html" ]
+  - [ "bash", "-lc", "echo '<pre>' > /var/www/html/index.html" ]
+  - [ "bash", "-lc", "curl -s -H 'Authorization: Bearer Oracle' http://169.254.169.254/opc/v2/instance/displayName >> /var/www/html/index.html" ]
+  - [ "bash", "-lc", "echo '' >> /var/www/html/index.html" ]
+  - [ "bash", "-lc", "df -kh >> /var/www/html/index.html" ]
+  - [ "bash", "-lc", "echo '</pre>' >> /var/www/html/index.html" ]
+  - [ "bash", "-lc", "systemctl enable --now nginx" ]
+
+  # - [ "bash", "-lc", "grep -q ' ${fss_mount_path} ' /etc/fstab || echo '${fss_mount_ip}:${fss_export_path} ${fss_mount_path} nfs defaults,_netdev 0 0' >> /etc/fstab" ]
+  # - [ "bash", "-lc", "mount -a" ]
+
+
+# mkdir -p ${fss_mount_path}
+# sudo mount ${fss_mount_ip}:${fss_export_path} ${fss_mount_path}
+# sudo iptables -I INPUT 5 -m state --state NEW -p tcp --destination-port 80 -j ACCEPT
+# sudo netfilter-persistent save
+# curl -s -H "Authorization: Bearer Oracle" http://169.254.169.254/opc/v2/instance/displayName
+
+  # - [ "bash", "-lc", "echo $(curl -s -H 'Authorization: Bearer Oracle' http://169.254.169.254/opc/v2/instance/displayName) > /var/www/html/index.html" ]
+# $(curl -s -H 'Authorization: Bearer Oracle' http://169.254.169.254/opc/v2/instance/displayName)

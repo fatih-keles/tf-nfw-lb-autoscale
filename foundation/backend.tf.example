@@ -1,0 +1,8 @@
+terraform {
+  backend "oci" {
+    bucket    = "CHANGE_ME_BACKEND_BUCKET"
+    namespace = "CHANGE_ME_BACKEND_NAMESPACE"
+    region    = "CHANGE_ME_BACKEND_REGION"
+    key       = "foundation/terraform.tfstate"
+  }
+}
