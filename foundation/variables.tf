@@ -19,7 +19,17 @@ variable "vcn_cidr" {
   default = "10.0.0.0/16"
 }
 
-variable "public_lb_subnet_cidr" {
+variable "firewall_public_subnet_cidr" {
+  type    = string
+  default = "10.0.10.0/24"
+}
+
+variable "network_firewall_private_ip" {
+  type    = string
+  default = "10.0.10.10"
+}
+
+variable "lb_public_subnet_cidr" {
   type    = string
   default = "10.0.20.0/24"
 }

@@ -17,10 +17,6 @@ resource "oci_file_storage_mount_target" "fss" {
   compartment_id      = var.compartment_ocid
   subnet_id           = oci_core_subnet.app_private.id
   display_name        = "${var.project_name}-fss-mt"
-
-  nsg_ids = [
-    oci_core_network_security_group.fss.id
-  ]
 }
 
 # -------------------------

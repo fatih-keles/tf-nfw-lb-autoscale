@@ -14,6 +14,7 @@ users:
 packages:
   - nginx
   - nfs-common
+  - postgresql-client
 
 runcmd:
   - [ "bash", "-lc", "curl -fsSL https://raw.githubusercontent.com/fatih-keles/tf-nfw-lb-autoscale/refs/heads/main/stress-cpu.sh -o /usr/local/bin/stress-cpu.sh" ]

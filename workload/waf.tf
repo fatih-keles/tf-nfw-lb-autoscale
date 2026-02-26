@@ -27,9 +27,9 @@ resource "oci_waf_web_app_firewall_policy" "lb" {
 }
 
 resource "oci_waf_web_app_firewall" "lb" {
-  compartment_id               = local.compartment_ocid
-  display_name                 = "${var.project_name}-waf"
-  backend_type                 = "LOAD_BALANCER"
-  load_balancer_id             = oci_load_balancer_load_balancer.app.id
-  web_app_firewall_policy_id   = oci_waf_web_app_firewall_policy.lb.id
+  compartment_id             = local.compartment_ocid
+  display_name               = "${var.project_name}-waf"
+  backend_type               = "LOAD_BALANCER"
+  load_balancer_id           = oci_load_balancer_load_balancer.app.id
+  web_app_firewall_policy_id = oci_waf_web_app_firewall_policy.lb.id
 }

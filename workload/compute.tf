@@ -48,7 +48,6 @@ resource "oci_core_instance_configuration" "app" {
         subnet_id              = local.app_private_subnet_id
         assign_public_ip       = false
         skip_source_dest_check = false
-        nsg_ids                = [local.nsg_app_id]
       }
 
       metadata = {

@@ -44,9 +44,27 @@ terraform -chdir=foundation init \
 	-backend-config="region=${TF_VAR_region}" \
 	-backend-config="key=foundation/terraform.tfstate"
 
+terraform -chdir=foundation plan
+
+terraform -chdir=foundation apply
+```
+
+# Terraform backend init (from .env) to save the state files in OCI Object Storage
+```bash
+source .env
+
 terraform -chdir=workload init \
 	-backend-config="bucket=${TF_VAR_bucket}" \
 	-backend-config="namespace=${TF_VAR_namespace}" \
 	-backend-config="region=${TF_VAR_region}" \
 	-backend-config="key=workload/terraform.tfstate"
+
+terraform -chdir=workload plan
+
+terraform -chdir=workload apply
+
 ```
+
+<!-- psql -h 10.0.40.49 -p 5432 -U admin -d appdb
+
+-p 5432 -U appuser -d appdb -->

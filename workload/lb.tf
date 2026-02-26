@@ -7,7 +7,6 @@ resource "oci_load_balancer_load_balancer" "app" {
   reserved_ips {
     id = local.lb_public_ip_id
   }
-  network_security_group_ids = [local.nsg_lb_id]
 
   shape_details {
     minimum_bandwidth_in_mbps = 10
@@ -21,13 +20,13 @@ resource "oci_load_balancer_backend_set" "app" {
   policy           = "ROUND_ROBIN"
 
   health_checker {
-    protocol         = "HTTP"
-    port             = 80
-    url_path         = "/"
-    return_code      = 200
+    protocol          = "HTTP"
+    port              = 80
+    url_path          = "/"
+    return_code       = 200
     interval_ms       = 10000
     timeout_in_millis = 3000
-    retries          = 3
+    retries           = 3
   }
 }
 
