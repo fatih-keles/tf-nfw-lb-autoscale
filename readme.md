@@ -68,3 +68,45 @@ terraform -chdir=workload apply
 <!-- psql -h 10.0.40.49 -p 5432 -U admin -d appdb
 
 -p 5432 -U appuser -d appdb -->
+
+# Restore remote state file to local
+## Clone the repository
+```bash
+git clone https://github.com/fatih-keles/tf-nfw-lb-autoscale.git
+cd tf-nfw-lb-autoscale
+```
+
+## Set environment variables from .env file
+```bash
+# edit .env file with the correct values for your environment
+source .env
+```
+
+## Destroy workload 
+```bash
+source .env
+
+terraform -chdir=workload init -reconfigure \
+  -backend-config="bucket=${TF_VAR_bucket}" \
+  -backend-config="namespace=${TF_VAR_namespace}" \
+  -backend-config="region=${TF_VAR_region}" \
+  -backend-config="key=workload/terraform.tfstate"
+
+terraform -chdir=workload plan -destroy
+terraform -chdir=workload destroy
+```
+
+## Destroy foundation 
+```bash
+source .env
+
+terraform -chdir=foundation init -reconfigure \
+  -backend-config="bucket=${TF_VAR_bucket}" \
+  -backend-config="namespace=${TF_VAR_namespace}" \
+  -backend-config="region=${TF_VAR_region}" \
+  -backend-config="key=foundation/terraform.tfstate"
+
+terraform -chdir=foundation plan -destroy
+terraform -chdir=foundation destroy
+```
+
