@@ -18,7 +18,7 @@ git push -u origin main
 
 # sample .env file content
 ```bash
-export TF_VAR_region="me-jeddah-1"
+export TF_VAR_region="me-riyadh-1"
 # demo compartment 
 export TF_VAR_compartment_ocid="ocid1.compartment.oc1.."
 export TF_VAR_project_name="poc-customer"
