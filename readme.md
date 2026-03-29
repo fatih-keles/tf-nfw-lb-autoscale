@@ -16,6 +16,9 @@ git branch -M main
 git push -u origin main
 ```
 
+# POC Architecture
+![POC Architecture](architecture.png)
+
 # sample .env file content
 ```bash
 export TF_VAR_region="me-riyadh-1"
